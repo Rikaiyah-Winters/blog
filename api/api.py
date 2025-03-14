@@ -16,9 +16,6 @@ class Blog(db.Model):
     def __repr__(self):
         return f"Blog(id={self.id}, thumbnail='{self.thumbnail}', title='{self.title}', description='{self.description}', category='{self.category}')"
 
-#with app.app_context():
-#  db.create_all()
-#  db.session.commit()
 
 @app.route('/api/blogs', methods=['GET'])
 def get_all_blogs():     
