@@ -89,7 +89,7 @@ figure {
 
 /* End Global Styles */
 
-.recipe-app {
+.blog-app {
   width: 90%;
   max-width: 1400px;
   margin: 2rem auto;
@@ -180,7 +180,7 @@ header .new-recipe:hover {
 
 /* All Recipe view */
 
-.recipe-list {
+.blog-list {
   display: flex;
   flex-wrap: wrap;
   gap: 4rem;
@@ -188,7 +188,7 @@ header .new-recipe:hover {
   margin: 2rem auto;
 }
 
-.recipe-card {
+.blog-card {
   display: flex;
   flex-direction: column;
   flex: 0 0 100%;
@@ -199,32 +199,40 @@ header .new-recipe:hover {
   box-shadow: var(--box-shadow);
 }
 
-.recipe-card h2 {
+.blog-card .blog-category {
+  font-size: 1.125rem;
+  font-weight: bold;
+  background-color: var(--secondary-color);
+  width: fit-content;
+  padding: 5px;
+}
+
+.blog-card h2 {
   font-size: 1.875rem;
   margin-bottom: 10px;
 }
 
-.recipe-card button {
+.blog-card button {
   font-weight: bold;
   background-color: var(--secondary-color);
   text-transform: uppercase;
   transition: transform 0.5s ease;
 }
 
-.recipe-card button:hover {
+.blog-card button:hover {
   cursor: pointer;
   background-color: var(--secondary-color-hover);
 }
 
-.recipe-card .flex-spacing {
+.blog-card .flex-spacing {
   flex-grow: 1;
 }
 
-.recipe-card p {
+.blog-card p {
   font-size: 1.125rem;
 }
 
-/* Recipe Details */
+/* Blog Details */
 
 .recipe-details {
   width: 100%;
@@ -431,16 +439,16 @@ header .new-recipe:hover {
     margin-bottom: 0;
   }
 
-  .recipe-card {
+  .blog-card {
     flex: 0 0 calc(50% - 2rem);
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .recipe-list {
+  .blog-list {
     gap: 3rem;
   }
-  .recipe-card {
+  .blog-card {
     flex: 0 0 calc(33.33% - 2rem);
   }
 
