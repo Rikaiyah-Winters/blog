@@ -14,4 +14,4 @@ const BlogExcerpt = ({ blog }) => {
     )
 }
 
-export default BlogExcerpt
+export default BlogExcerpt;
