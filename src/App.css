@@ -315,7 +315,7 @@ header .new-recipe:hover {
   font-size: 18px;
 }
 
-.recipe-details .ingredient-list {
+.recipe-details {
   padding-left: 1rem;
   list-style-type: none;
   line-height: 2rem;
@@ -325,7 +325,7 @@ header .new-recipe:hover {
   content: " - ";
   padding-right: 0.75rem;
 }
-.recipe-details .formatted-text {
+.recipe-details {
   max-width: 100%;
   margin-top: 10px;
   white-space: pre-line;
