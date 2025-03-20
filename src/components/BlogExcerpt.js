@@ -1,6 +1,6 @@
 import React from "react";
 
-const BlogExcerpt = ({ blog }) => {
+const BlogExcerpt = ({ blog, handleSelectBlog }) => {
     return (
         <article className="blog-card">
             <p className="blog-category">{blog.category}</p>
@@ -9,7 +9,7 @@ const BlogExcerpt = ({ blog }) => {
             </figure>
             <h2>{blog.title}</h2>
             <p className="flex-spacing">Description: {blog.description}</p>
-            <button>View</button>
+            <button onClick={() => handleSelectBlog(blog)}>View</button>
         </article>
     )
 }

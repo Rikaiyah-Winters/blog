@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import BlogExcerpt from "./components/BlogExcerpt";
+import BlogFull from "./components/BlogFull";
 import "./App.css";
 
 function App() {
-  const [blogs, setBlogs] = useState([])
+  const [blogs, setBlogs] = useState([]);
+  const [selectedBlog, setSelectedBlog] = useState(null);
 
   useEffect(() => {
     const fetchAllBlogs = async () => {
@@ -24,15 +26,27 @@ function App() {
     fetchAllBlogs();
   }, [])
 
+  const handleSelectBlog = (blog) => {
+    setSelectedBlog(blog);
+  }
+
+  const handleUnselectBlog = () => {
+    setSelectedBlog(null);
+  }
+
   return (
     <div className='blog-app'>
       <Header />
-      <div className="blog-list">
-        {blogs.map((blog) => (
-          <BlogExcerpt key={blog.id} blog={blog} />
-        ))}
-      </div>
-    </div>
+      {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} />}
+      {!selectedBlog && (
+        < div className="blog-list">
+          {blogs.map((blog) => (
+            <BlogExcerpt key={blog.id} blog={blog} handleSelectBlog={handleSelectBlog} />
+          ))}
+        </div>
+      )
+      }
+    </div >
   );
 }
 

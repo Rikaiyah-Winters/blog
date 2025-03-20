@@ -15,7 +15,7 @@ const Header = () => {
           <Search />
         </div>
       </div>
-      <h1>My Favorite Recipes</h1>
+      <h1>My Latest Blogs</h1>
     </header>
   );
 };
