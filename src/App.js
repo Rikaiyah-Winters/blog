@@ -2,11 +2,19 @@ import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import BlogExcerpt from "./components/BlogExcerpt";
 import BlogFull from "./components/BlogFull";
+import NewBlogForm from "./components/NewBlogForm";
 import "./App.css";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [newBlog, setNewBlog] = useState({
+    thumbnail: "",
+    title: "",
+    descriptions: "",
+    category:""
+  });
+  const [showNewBlogForm, setShowNewBlogForm] = useState(false);
 
   useEffect(() => {
     const fetchAllBlogs = async () => {
@@ -34,9 +42,24 @@ function App() {
     setSelectedBlog(null);
   }
 
+  const hideBlogForm = () => {
+    setShowNewBlogForm(false);
+  }
+
+  const showBlogForm = () => {
+    setShowNewBlogForm(true);
+    setSelectedBlog(null);
+  }
+
+  const onUpdateForm = (e) => {
+    const { name, value } = e.target;
+    setNewBlog({...newBlog, [name]: value})
+  }
+
   return (
     <div className='blog-app'>
-      <Header />
+      <Header showBlogForm={showBlogForm} />
+      {showNewBlogForm && <NewBlogForm newBlog={newBlog} hideBlogForm={hideBlogForm} onUpdateForm={onUpdateForm}/>}
       {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} />}
       {!selectedBlog && (
         < div className="blog-list">

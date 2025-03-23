@@ -164,7 +164,7 @@ header .logo-search .search svg {
   stroke-width: 3px;
 }
 
-header .new-recipe {
+header .new-blog {
   width: 260px;
   padding: 1rem 0;
   background-color: var(--primary-color);
@@ -174,7 +174,7 @@ header .new-recipe {
   cursor: pointer;
 }
 
-header .new-recipe:hover {
+header .new-blog:hover {
   background-color: var(--dark-gray);
 }
 
@@ -334,26 +334,26 @@ header .new-recipe:hover {
 
 /* Recipe Form */
 
-.recipe-form {
+.blog-form {
   width: 90%;
   margin: 0 auto;
   padding: 2rem;
 }
 
-.recipe-form h2 {
+.blog-form h2 {
   margin-bottom: 1.5rem;
   font-size: 24px;
 }
 
-.recipe-form label {
+.blog-form label {
   display: block;
   margin-top: 10px;
   font-weight: bold;
 }
 
-.recipe-form input[type="text"],
-.recipe-form textarea,
-.recipe-form input[type="number"] {
+.blog-form input[type="text"],
+.blog-form textarea,
+.blog-form input[type="number"] {
   width: 100%;
   padding: 10px;
   margin: 5px 0 15px 0;
@@ -365,15 +365,15 @@ header .new-recipe:hover {
   inset: none;
 }
 
-.recipe-form textarea {
+.blog-form textarea {
   min-height: 6rem;
 }
 
-.recipe-form .cancel-button {
+.blog-form .cancel-button {
   margin-bottom: 2.5rem;
 }
 
-.recipe-form button[type="submit"] {
+.blog-form button[type="submit"] {
   width: 240px;
   margin-top: 2rem;
   padding: 1.5rem 3rem;
@@ -384,7 +384,7 @@ header .new-recipe:hover {
   cursor: pointer;
 }
 
-.recipe-form button[type="submit"]:hover {
+.blog-form button[type="submit"]:hover {
   background-color: var(--dark-gray);
 }
 
