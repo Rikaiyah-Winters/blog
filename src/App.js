@@ -12,7 +12,7 @@ function App() {
     thumbnail: "",
     title: "",
     descriptions: "",
-    category:""
+    category: ""
   });
   const [showNewBlogForm, setShowNewBlogForm] = useState(false);
 
@@ -53,15 +53,44 @@ function App() {
 
   const onUpdateForm = (e) => {
     const { name, value } = e.target;
-    setNewBlog({...newBlog, [name]: value})
+    setNewBlog({ ...newBlog, [name]: value })
   }
+
+  const handleNewBlog = async (e, newBlog) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('/api/blogs', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newBlog)
+      });
+      if (response.ok){
+        const data = await response.json();
+        setBlogs([...blogs, data.blog]);
+        setShowNewBlogForm(false);
+        setNewBlog({
+          thumbnail: "",
+          title: "",
+          description: "",
+          category: ""
+        });
+      } else {
+        console.error("Oops - could not add blog post!");
+      }
+    } catch (e) {
+      console.error("An error occurred during the request:", e);
+    }
+  };
 
   return (
     <div className='blog-app'>
       <Header showBlogForm={showBlogForm} />
-      {showNewBlogForm && <NewBlogForm newBlog={newBlog} hideBlogForm={hideBlogForm} onUpdateForm={onUpdateForm}/>}
+      {showNewBlogForm && <NewBlogForm newBlog={newBlog} hideBlogForm={hideBlogForm} onUpdateForm={onUpdateForm} handleNewBlog={handleNewBlog} />}
       {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} />}
-      {!selectedBlog && (
+      {!selectedBlog && !showNewBlogForm && (
         < div className="blog-list">
           {blogs.map((blog) => (
             <BlogExcerpt key={blog.id} blog={blog} handleSelectBlog={handleSelectBlog} />

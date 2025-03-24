@@ -75,7 +75,7 @@ def update_blog(blog_id):
     blog.catagory = data['category']
 
     db.session.commit()
- # Serialize the updated recipe and return it as JSON
+ # Serialize the updated blog and return it as JSON
     updated_blog = {
         'id': blog.id,
         'thumbnail': blog.thumbnail,

@@ -1,12 +1,12 @@
 import React from "react";
 
-const NewBlogForm = ({ newBlog, hideBlogForm, onUpdateForm}) => {
+const NewBlogForm = ({ newBlog, hideBlogForm, onUpdateForm, handleNewBlog }) => {
     return (
         <div className="blog-details">
             <div className="blog-form">
                 <h2>New Blog Post</h2>
                 <button className="cancel-button" onClick={hideBlogForm}>Cancel</button>
-                <form>
+                <form onSubmit={(e) => handleNewBlog(e, newBlog)}>
                     <label>Thumbnail</label>
                     <input type="text" name="thumbnail" value={newBlog.thumbnail} onChange={(e) => onUpdateForm(e)} required />
                     
@@ -18,11 +18,11 @@ const NewBlogForm = ({ newBlog, hideBlogForm, onUpdateForm}) => {
 
                     <label>Category</label> {/*may need to do more research on this section */}
                     <select name="category" onChange={(e) => onUpdateForm(e)}>
-                        <option value="lifestyle">Lifestyle</option>
-                        <option value="technology">Technology</option>
-                        <option value="health">Health and Wellness</option>
-                        <option value="food">Food and Drink</option>
-                        <option value="travel">Travel</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Health and Wellness">Health and Wellness</option>
+                        <option value="Food and Drink">Food and Drink</option>
+                        <option value="Travel">Travel</option>
                     </select>
 
                     <button type="submit">Publish Blog</button>
