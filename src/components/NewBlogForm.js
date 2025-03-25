@@ -16,7 +16,7 @@ const NewBlogForm = ({ newBlog, hideBlogForm, onUpdateForm, handleNewBlog }) => 
                     <label>Description</label>
                     <textarea name="description" value={newBlog.description} onChange={(e) => onUpdateForm(e)} required />
 
-                    <label>Category</label> {/*may need to do more research on this section */}
+                    <label>Category</label>
                     <select name="category" onChange={(e) => onUpdateForm(e)}>
                         <option value="Lifestyle">Lifestyle</option>
                         <option value="Technology">Technology</option>

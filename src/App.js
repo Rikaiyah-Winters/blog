@@ -34,28 +34,6 @@ function App() {
     fetchAllBlogs();
   }, [])
 
-  const handleSelectBlog = (blog) => {
-    setSelectedBlog(blog);
-  }
-
-  const handleUnselectBlog = () => {
-    setSelectedBlog(null);
-  }
-
-  const hideBlogForm = () => {
-    setShowNewBlogForm(false);
-  }
-
-  const showBlogForm = () => {
-    setShowNewBlogForm(true);
-    setSelectedBlog(null);
-  }
-
-  const onUpdateForm = (e) => {
-    const { name, value } = e.target;
-    setNewBlog({ ...newBlog, [name]: value })
-  }
-
   const handleNewBlog = async (e, newBlog) => {
     e.preventDefault();
 
@@ -67,7 +45,7 @@ function App() {
         },
         body: JSON.stringify(newBlog)
       });
-      if (response.ok){
+      if (response.ok) {
         const data = await response.json();
         setBlogs([...blogs, data.blog]);
         setShowNewBlogForm(false);
@@ -85,11 +63,70 @@ function App() {
     }
   };
 
+  const handleUpdateBlog = async (e, selectedBlog) => {
+    e.preventDefault();
+
+    const { id } = selectedBlog;
+
+    try {
+      const response = await fetch(`/api/blogs/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(selectedBlog)
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setBlogs(
+          blogs.map((blog) => {
+            if (blog.id === id) {
+              return data.blog;
+            }
+            return blog;
+          })
+        );
+        console.log("Blog updated!")
+      } else {
+        console.error("Oops - could not update blog post!");
+      }
+    } catch (e) {
+      console.error("An error occurred during the request:", e);
+    }
+    setSelectedBlog(null);
+  };
+
+  const handleSelectBlog = (blog) => {
+    setSelectedBlog(blog);
+  }
+
+  const handleUnselectBlog = () => {
+    setSelectedBlog(null);
+  }
+
+  const hideBlogForm = () => {
+    setShowNewBlogForm(false);
+  }
+
+  const showBlogForm = () => {
+    setShowNewBlogForm(true);
+    setSelectedBlog(null);
+  }
+
+  const onUpdateForm = (e, action = "new") => {
+    const { name, value } = e.target;
+    if (action === "update") {
+      setSelectedBlog({ ...selectedBlog, [name]: value })
+    } else {
+      setNewBlog({ ...newBlog, [name]: value })
+    }
+  }
+
   return (
     <div className='blog-app'>
       <Header showBlogForm={showBlogForm} />
       {showNewBlogForm && <NewBlogForm newBlog={newBlog} hideBlogForm={hideBlogForm} onUpdateForm={onUpdateForm} handleNewBlog={handleNewBlog} />}
-      {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} />}
+      {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} onUpdateForm={onUpdateForm} handleUpdateBlog={handleUpdateBlog} />}
       {!selectedBlog && !showNewBlogForm && (
         < div className="blog-list">
           {blogs.map((blog) => (
