@@ -8,16 +8,17 @@ const NewBlogForm = ({ newBlog, hideBlogForm, onUpdateForm, handleNewBlog }) => 
                 <button className="cancel-button" onClick={hideBlogForm}>Cancel</button>
                 <form onSubmit={(e) => handleNewBlog(e, newBlog)}>
                     <label>Thumbnail</label>
-                    <input type="text" name="thumbnail" value={newBlog.thumbnail} onChange={(e) => onUpdateForm(e)} required />
+                    <input type="text" name="thumbnail" value={newBlog.thumbnail} onChange={(e) => onUpdateForm(e, "new")} required />
                     
                     <label>Title</label>
-                    <input type="text" name="title" value={newBlog.title} onChange={(e) => onUpdateForm(e)} required />
+                    <input type="text" name="title" value={newBlog.title} onChange={(e) => onUpdateForm(e, "new")} required />
                     
                     <label>Description</label>
-                    <textarea name="description" value={newBlog.description} onChange={(e) => onUpdateForm(e)} required />
+                    <textarea name="description" value={newBlog.description} onChange={(e) => onUpdateForm(e, "new")} required />
 
                     <label>Category</label>
                     <select name="category" onChange={(e) => onUpdateForm(e)}>
+                        <option value="">Select Category</option>
                         <option value="Lifestyle">Lifestyle</option>
                         <option value="Technology">Technology</option>
                         <option value="Health and Wellness">Health and Wellness</option>

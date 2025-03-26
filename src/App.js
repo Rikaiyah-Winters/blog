@@ -96,6 +96,23 @@ function App() {
     setSelectedBlog(null);
   };
 
+  const handleDeleteBlog = async (blogId) => {
+    try {
+      const response = await fetch(`/api/blogs/${blogId}`, {
+        method: "DELETE"
+      })
+      if (response.ok) {
+        setBlogs(blogs.filter((blog) => blog.id !== blogId));
+        setSelectedBlog(null);
+        console.log("Blog post was deleted successfully!")
+      } else {
+        console.error("Oops - could not delete blog post!");
+      }
+    } catch (e) {
+      console.error("Something went wrong during the request:", e);
+    }
+  }
+
   const handleSelectBlog = (blog) => {
     setSelectedBlog(blog);
   }
@@ -121,12 +138,12 @@ function App() {
       setNewBlog({ ...newBlog, [name]: value })
     }
   }
-
+  
   return (
     <div className='blog-app'>
       <Header showBlogForm={showBlogForm} />
       {showNewBlogForm && <NewBlogForm newBlog={newBlog} hideBlogForm={hideBlogForm} onUpdateForm={onUpdateForm} handleNewBlog={handleNewBlog} />}
-      {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} onUpdateForm={onUpdateForm} handleUpdateBlog={handleUpdateBlog} />}
+      {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} onUpdateForm={onUpdateForm} handleUpdateBlog={handleUpdateBlog} handleDeleteBlog={handleDeleteBlog} />}
       {!selectedBlog && !showNewBlogForm && (
         < div className="blog-list">
           {blogs.map((blog) => (

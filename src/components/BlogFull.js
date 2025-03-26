@@ -1,12 +1,25 @@
 import React, { useState } from "react";
 import EditBlogForm from "./EditBlogForm";
+import ConfirmationModal from "./ConfirmationModal";
 import { X } from "react-feather";
 
-const BlogFull = ({ selectedBlog, handleUnselectBlog, onUpdateForm, handleUpdateBlog }) => {
+const BlogFull = ({ selectedBlog, handleUnselectBlog, onUpdateForm, handleUpdateBlog, handleDeleteBlog }) => {
     const [editing, setEditing] = useState(false);
-
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const handleCancel = () => {
         setEditing(false)
+    }
+
+    if (showConfirmationModal){
+        return (
+            <div className="blog-details">
+                <ConfirmationModal 
+                message="Are you sure? Once it's gone, it's gone."
+                onCancel={() => setShowConfirmationModal(false)}
+                onConfirm={() => handleDeleteBlog(selectedBlog.id)}
+                />
+            </div>
+        )
     }
 
     return (
@@ -23,7 +36,7 @@ const BlogFull = ({ selectedBlog, handleUnselectBlog, onUpdateForm, handleUpdate
                             <button className='cancel-button' onClick={() => handleUnselectBlog(selectedBlog)}>
                                 <X /> Close
                             </button>
-                            <button className='delete-button'>Delete</button>
+                            <button className='delete-button' onClick={() => setShowConfirmationModal(true)}>Delete</button>
                         </div>
                     </header>
                     <h3>Description:</h3>
