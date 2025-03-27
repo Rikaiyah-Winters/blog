@@ -15,6 +15,7 @@ function App() {
     category: ""
   });
   const [showNewBlogForm, setShowNewBlogForm] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchAllBlogs = async () => {
@@ -138,15 +139,29 @@ function App() {
       setNewBlog({ ...newBlog, [name]: value })
     }
   }
+
+  const updateSearchTerm = (text) => {
+    setSearchTerm(text);
+  };
+
+  const handleSearch = () => {
+    const searchResults = blogs.filter((blog) => {
+      const valuesToSearch = [blog.title, blog.description];
+      return valuesToSearch.some((value) => value.toLowerCase().includes(searchTerm.toLowerCase()));
+    })
+    return searchResults;
+  }
+
+  const displayedBlogs = searchTerm ? handleSearch() : blogs;
   
   return (
     <div className='blog-app'>
-      <Header showBlogForm={showBlogForm} />
+      <Header showBlogForm={showBlogForm} updateSearchTerm={updateSearchTerm} searchTerm={searchTerm} />
       {showNewBlogForm && <NewBlogForm newBlog={newBlog} hideBlogForm={hideBlogForm} onUpdateForm={onUpdateForm} handleNewBlog={handleNewBlog} />}
       {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} onUpdateForm={onUpdateForm} handleUpdateBlog={handleUpdateBlog} handleDeleteBlog={handleDeleteBlog} />}
       {!selectedBlog && !showNewBlogForm && (
         < div className="blog-list">
-          {blogs.map((blog) => (
+          {displayedBlogs.map((blog) => (
             <BlogExcerpt key={blog.id} blog={blog} handleSelectBlog={handleSelectBlog} />
           ))}
         </div>
