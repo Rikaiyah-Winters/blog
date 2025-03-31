@@ -3,6 +3,9 @@ import Header from "./components/Header";
 import BlogExcerpt from "./components/BlogExcerpt";
 import BlogFull from "./components/BlogFull";
 import NewBlogForm from "./components/NewBlogForm";
+import displayToast from "./helpers/toasterHelper";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 import "./App.css";
 
 function App() {
@@ -25,11 +28,11 @@ function App() {
           const data = await response.json();
           setBlogs(data);
         } else {
-          console.log("Oops -  could not fetch blogss!");
+          displayToast("Oops -  could not fetch blogs!", "error");
         }
       } catch (e) {
         console.error("An error occurred during the request:", e);
-        console.log("An unexpected error occurred. Please try again later.");
+        displayToast("An unexpected error occurred. Please try again later.", "error");
       }
     };
     fetchAllBlogs();
@@ -49,6 +52,7 @@ function App() {
       if (response.ok) {
         const data = await response.json();
         setBlogs([...blogs, data.blog]);
+        displayToast("Blog post added succesfully!", "success")
         setShowNewBlogForm(false);
         setNewBlog({
           thumbnail: "",
@@ -57,10 +61,10 @@ function App() {
           category: ""
         });
       } else {
-        console.error("Oops - could not add blog post!");
+        displayToast("Oops - could not add blog post!", "error");
       }
     } catch (e) {
-      console.error("An error occurred during the request:", e);
+      displayToast("An error occurred during the request:", "error");
     }
   };
 
@@ -87,12 +91,12 @@ function App() {
             return blog;
           })
         );
-        console.log("Blog updated!")
+        displayToast("Blog updated!", "success")
       } else {
-        console.error("Oops - could not update blog post!");
+        displayToast("Oops - could not update blog post!", "error");
       }
     } catch (e) {
-      console.error("An error occurred during the request:", e);
+      displayToast("An error occurred during the request:", "error");
     }
     setSelectedBlog(null);
   };
@@ -105,12 +109,12 @@ function App() {
       if (response.ok) {
         setBlogs(blogs.filter((blog) => blog.id !== blogId));
         setSelectedBlog(null);
-        console.log("Blog post was deleted successfully!")
+        displayToast("Blog post was deleted successfully!")
       } else {
-        console.error("Oops - could not delete blog post!");
+        displayToast("Oops - could not delete blog post!", "error");
       }
     } catch (e) {
-      console.error("Something went wrong during the request:", e);
+      displayToast("Something went wrong during the request:", "error");
     }
   }
 
@@ -153,10 +157,16 @@ function App() {
   }
 
   const displayedBlogs = searchTerm ? handleSearch() : blogs;
+
+  const displayAllBlogs = () => {
+    setSearchTerm("");
+    setSelectedBlog(null);
+    setShowNewBlogForm(false);
+  }
   
   return (
     <div className='blog-app'>
-      <Header showBlogForm={showBlogForm} updateSearchTerm={updateSearchTerm} searchTerm={searchTerm} />
+      <Header showBlogForm={showBlogForm} updateSearchTerm={updateSearchTerm} searchTerm={searchTerm} displayAllBlogs={displayAllBlogs} />
       {showNewBlogForm && <NewBlogForm newBlog={newBlog} hideBlogForm={hideBlogForm} onUpdateForm={onUpdateForm} handleNewBlog={handleNewBlog} />}
       {selectedBlog && <BlogFull selectedBlog={selectedBlog} handleUnselectBlog={handleUnselectBlog} onUpdateForm={onUpdateForm} handleUpdateBlog={handleUpdateBlog} handleDeleteBlog={handleDeleteBlog} />}
       {!selectedBlog && !showNewBlogForm && (
@@ -167,6 +177,7 @@ function App() {
         </div>
       )
       }
+      <ToastContainer />
     </div >
   );
 }
